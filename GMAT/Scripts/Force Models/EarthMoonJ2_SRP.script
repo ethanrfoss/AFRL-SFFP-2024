@@ -1,0 +1,28 @@
+
+
+%----------------------------------------
+%---------- ForceModels
+%----------------------------------------
+
+Create ForceModel EarthMoonJ2_SRP;  %  EarthMoonJ2 FM, uses multiple full gravitational fields for Earth and Moon, includes point-mass perturbations from the Sun, Venus, Mars, Jupiter, Saturn, Uranus, and Neptune, includes SRP
+GMAT EarthMoonJ2_SRP.CentralBody = Earth;
+GMAT EarthMoonJ2_SRP.PrimaryBodies = {Luna};
+GMAT EarthMoonJ2_SRP.PointMasses = {Sun, Venus, Mars, Jupiter, Saturn, Uranus, Neptune};
+GMAT EarthMoonJ2_SRP.Drag = None;
+GMAT EarthMoonJ2_SRP.SRP = On;
+GMAT EarthMoonJ2_SRP.RelativisticCorrection = On;
+GMAT EarthMoonJ2_SRP.ErrorControl = RSSStep;
+GMAT EarthMoonJ2_SRP.GravityField.Luna.Degree = 16;
+GMAT EarthMoonJ2_SRP.GravityField.Luna.Order = 16;
+GMAT EarthMoonJ2_SRP.GravityField.Luna.StmLimit = 100;
+GMAT EarthMoonJ2_SRP.GravityField.Luna.PotentialFile = '../data/gravity/luna/grgm900c.cof';
+GMAT EarthMoonJ2_SRP.GravityField.Luna.TideFile = '../data/gravity/luna/grgm900c.tide';
+GMAT EarthMoonJ2_SRP.GravityField.Luna.TideModel = 'Solid';
+%GMAT EarthMoonJ2_SRP.GravityField.Earth.Degree = 12;
+%GMAT EarthMoonJ2_SRP.GravityField.Earth.Order = 12;
+%GMAT EarthMoonJ2_SRP.GravityField.Earth.StmLimit = 100;
+%GMAT EarthMoonJ2_SRP.GravityField.Earth.PotentialFile = 'JGM2.cof';
+%GMAT EarthMoonJ2_SRP.GravityField.Earth.TideModel = 'None';
+GMAT EarthMoonJ2_SRP.SRP.Flux = 1367;
+GMAT EarthMoonJ2_SRP.SRP.SRPModel = Spherical;
+GMAT EarthMoonJ2_SRP.SRP.Nominal_Sun = 149597870.691;

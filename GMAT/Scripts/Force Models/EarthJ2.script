@@ -1,0 +1,17 @@
+%----------------------------------------
+%---------- ForceModels
+%----------------------------------------
+
+Create ForceModel EarthJ2; % EarthJ2 FM that uses full gravitational fields for Earth, includes point-mass perturbations from the Sun, Earth, Venus, Mars, Jupiter, Saturn, Uranus, and Neptune.
+GMAT EarthJ2.CentralBody = Earth;
+GMAT EarthJ2.PrimaryBodies = {Earth};
+GMAT EarthJ2.PointMasses = {Sun, Luna, Mercury, Venus, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto};
+GMAT EarthJ2.Drag = None;
+GMAT EarthJ2.SRP = Off;
+GMAT EarthJ2.RelativisticCorrection = On;
+GMAT EarthJ2.ErrorControl = RSSStep;
+GMAT EarthJ2.GravityField.Earth.Degree = 50;
+GMAT EarthJ2.GravityField.Earth.Order = 50;
+GMAT EarthJ2.GravityField.Earth.StmLimit = 100;
+GMAT EarthJ2.GravityField.Earth.PotentialFile = 'JGM2.cof';
+GMAT EarthJ2.GravityField.Earth.TideModel = 'None';

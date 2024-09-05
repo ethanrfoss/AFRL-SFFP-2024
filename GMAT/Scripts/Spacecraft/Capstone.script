@@ -1,0 +1,57 @@
+
+%----------------------------------------
+%---------- Spacecraft
+%----------------------------------------
+
+Create Spacecraft Capstone;
+GMAT Capstone.DateFormat = TDBGregorian;
+GMAT Capstone.Epoch = '19 Nov 2022 00:00:00.000';
+GMAT Capstone.CoordinateSystem = EarthMJ2000Ec;
+GMAT Capstone.DisplayStateType = Cartesian;
+GMAT Capstone.X = -3.998540475751689E+05; % Nov 19, 2022, 00:00:00.000 IC
+GMAT Capstone.Y = 6.126049756976774E+04;
+GMAT Capstone.Z = -2.695661234835022E+04;
+GMAT Capstone.VX = -1.767694283860905E-02;
+GMAT Capstone.VY = -9.729575033742976E-01;
+GMAT Capstone.VZ = 1.417589603935756E-01;
+%GMAT Capstone.X = -251785.2980913847; % Nov 15, 2022, 00:00:00.000 IC
+%GMAT Capstone.Y = 328035.4664283268;
+%GMAT Capstone.Z = -2028.414974913714;
+%GMAT Capstone.VX = -0.8151501433828446;
+%GMAT Capstone.VY = -0.5140057244507429;
+%GMAT Capstone.VZ = -0.3145750642395194;
+GMAT Capstone.DryMass = 100;
+GMAT Capstone.Cd = 2.2;
+GMAT Capstone.Cr = 1.5;
+GMAT Capstone.DragArea = 15;
+GMAT Capstone.SRPArea = 1;
+GMAT Capstone.SPADDragScaleFactor = 1;
+GMAT Capstone.SPADSRPScaleFactor = 1;
+GMAT Capstone.AtmosDensityScaleFactor = 1;
+GMAT Capstone.ExtendedMassPropertiesModel = 'None';
+GMAT Capstone.NAIFId = -10011001;
+GMAT Capstone.NAIFIdReferenceFrame = -9011001;
+GMAT Capstone.OrbitColor = Red;
+GMAT Capstone.TargetColor = Teal;
+GMAT Capstone.OrbitErrorCovariance = [ 1e+70 0 0 0 0 0 ; 0 1e+70 0 0 0 0 ; 0 0 1e+70 0 0 0 ; 0 0 0 1e+70 0 0 ; 0 0 0 0 1e+70 0 ; 0 0 0 0 0 1e+70 ];
+GMAT Capstone.CdSigma = 1e+70;
+GMAT Capstone.CrSigma = 1e+70;
+GMAT Capstone.Id = 'Capstone';
+GMAT Capstone.Attitude = CoordinateSystemFixed;
+GMAT Capstone.SPADSRPInterpolationMethod = Bilinear;
+GMAT Capstone.SPADSRPScaleFactorSigma = 1e+70;
+GMAT Capstone.SPADDragInterpolationMethod = Bilinear;
+GMAT Capstone.SPADDragScaleFactorSigma = 1e+70;
+GMAT Capstone.AtmosDensityScaleFactorSigma = 1e+70;
+GMAT Capstone.ModelFile = 'aura.3ds';
+GMAT Capstone.ModelOffsetX = 0;
+GMAT Capstone.ModelOffsetY = 0;
+GMAT Capstone.ModelOffsetZ = 0;
+GMAT Capstone.ModelRotationX = 0;
+GMAT Capstone.ModelRotationY = 0;
+GMAT Capstone.ModelRotationZ = 0;
+GMAT Capstone.ModelScale = 1;
+GMAT Capstone.AttitudeDisplayStateType = 'Quaternion';
+GMAT Capstone.AttitudeRateDisplayStateType = 'AngularVelocity';
+GMAT Capstone.AttitudeCoordinateSystem = EarthMJ2000Eq;
+GMAT Capstone.EulerAngleSequence = '321';

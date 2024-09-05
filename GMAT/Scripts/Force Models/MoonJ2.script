@@ -1,0 +1,18 @@
+%----------------------------------------
+%---------- ForceModels
+%----------------------------------------
+
+
+Create ForceModel MoonJ2; % MoonJ2 FM that uses full gravitational fields for Moon, includes point-mass perturbations from the Sun, Earth, Venus, Mars, Jupiter, Saturn, Uranus, and Neptune
+GMAT MoonJ2.CentralBody = Luna;
+GMAT MoonJ2.PrimaryBodies = {Luna};
+GMAT MoonJ2.PointMasses = {Sun, Earth, Mercury, Venus, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto};
+GMAT MoonJ2.Drag = None;
+GMAT MoonJ2.SRP = Off;
+GMAT MoonJ2.RelativisticCorrection = On;
+GMAT MoonJ2.ErrorControl = RSSStep;
+GMAT MoonJ2.GravityField.Luna.Degree = 50;
+GMAT MoonJ2.GravityField.Luna.Order = 50;
+GMAT MoonJ2.GravityField.Luna.StmLimit = 100;
+GMAT MoonJ2.GravityField.Luna.PotentialFile = 'LP165P.cof';
+GMAT MoonJ2.GravityField.Luna.TideModel = 'None';

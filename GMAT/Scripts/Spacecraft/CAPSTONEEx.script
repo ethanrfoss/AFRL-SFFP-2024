@@ -1,0 +1,457 @@
+%
+%   CAPSTONE.script
+%
+%   Propagate state of CAPSTONE from 11/15/22 00:00:00 
+
+
+%----------------------------------------
+%---------- Solar System User-Modified Values
+%----------------------------------------
+
+GMAT SolarSystem.EphemerisSource = 'SPICE';
+GMAT SolarSystem.SPKFilename = 'C:\Users\ethan\OneDrive\Documents\GMAT\Instruction Manuals\GMAT\GMAT_examples\Kernels\de440.bsp';
+GMAT Mars.NAIFId    = 4;
+GMAT Jupiter.NAIFId = 5;
+GMAT Saturn.NAIFId  = 6;
+GMAT Uranus.NAIFId  = 7;
+GMAT Neptune.NAIFId = 8;
+GMAT Pluto.NAIFId   = 9;
+
+%----------------------------------------
+%---------- Coordinate Systems
+%----------------------------------------
+
+Create Barycenter EarthMoonBary;
+GMAT EarthMoonBary.OrbitColor = Gold;
+GMAT EarthMoonBary.TargetColor = DarkGray;
+GMAT EarthMoonBary.BodyNames = {Earth, Luna};
+%----------------------------------------
+%---------- Spacecraft
+%----------------------------------------
+
+Create Spacecraft CAPSTONE;
+GMAT CAPSTONE.DateFormat = TDBGregorian;
+GMAT CAPSTONE.Epoch = '19 Nov 2022 00:00:00.000';
+GMAT CAPSTONE.CoordinateSystem = EarthMJ2000Ec;
+GMAT CAPSTONE.DisplayStateType = Cartesian;
+GMAT CAPSTONE.X = -3.998540475751689E+05; % Nov 19, 2022, 00:00:00.000 IC
+GMAT CAPSTONE.Y = 6.126049756976774E+04;
+GMAT CAPSTONE.Z = -2.695661234835022E+04;
+GMAT CAPSTONE.VX = -1.767694283860905E-02;
+GMAT CAPSTONE.VY = -9.729575033742976E-01;
+GMAT CAPSTONE.VZ = 1.417589603935756E-01;
+%GMAT CAPSTONE.X = -251785.2980913847; % Nov 15, 2022, 00:00:00.000 IC
+%GMAT CAPSTONE.Y = 328035.4664283268;
+%GMAT CAPSTONE.Z = -2028.414974913714;
+%GMAT CAPSTONE.VX = -0.8151501433828446;
+%GMAT CAPSTONE.VY = -0.5140057244507429;
+%GMAT CAPSTONE.VZ = -0.3145750642395194;
+GMAT CAPSTONE.DryMass = 100;
+GMAT CAPSTONE.Cd = 2.2;
+GMAT CAPSTONE.Cr = 1.5;
+GMAT CAPSTONE.DragArea = 15;
+GMAT CAPSTONE.SRPArea = 1;
+GMAT CAPSTONE.SPADDragScaleFactor = 1;
+GMAT CAPSTONE.SPADSRPScaleFactor = 1;
+GMAT CAPSTONE.AtmosDensityScaleFactor = 1;
+GMAT CAPSTONE.ExtendedMassPropertiesModel = 'None';
+GMAT CAPSTONE.NAIFId = -10011001;
+GMAT CAPSTONE.NAIFIdReferenceFrame = -9011001;
+GMAT CAPSTONE.OrbitColor = Red;
+GMAT CAPSTONE.TargetColor = Teal;
+GMAT CAPSTONE.OrbitErrorCovariance = [ 1e+70 0 0 0 0 0 ; 0 1e+70 0 0 0 0 ; 0 0 1e+70 0 0 0 ; 0 0 0 1e+70 0 0 ; 0 0 0 0 1e+70 0 ; 0 0 0 0 0 1e+70 ];
+GMAT CAPSTONE.CdSigma = 1e+70;
+GMAT CAPSTONE.CrSigma = 1e+70;
+GMAT CAPSTONE.Id = 'CAPSTONE';
+GMAT CAPSTONE.Attitude = CoordinateSystemFixed;
+GMAT CAPSTONE.SPADSRPInterpolationMethod = Bilinear;
+GMAT CAPSTONE.SPADSRPScaleFactorSigma = 1e+70;
+GMAT CAPSTONE.SPADDragInterpolationMethod = Bilinear;
+GMAT CAPSTONE.SPADDragScaleFactorSigma = 1e+70;
+GMAT CAPSTONE.AtmosDensityScaleFactorSigma = 1e+70;
+GMAT CAPSTONE.ModelFile = 'aura.3ds';
+GMAT CAPSTONE.ModelOffsetX = 0;
+GMAT CAPSTONE.ModelOffsetY = 0;
+GMAT CAPSTONE.ModelOffsetZ = 0;
+GMAT CAPSTONE.ModelRotationX = 0;
+GMAT CAPSTONE.ModelRotationY = 0;
+GMAT CAPSTONE.ModelRotationZ = 0;
+GMAT CAPSTONE.ModelScale = 1;
+GMAT CAPSTONE.AttitudeDisplayStateType = 'Quaternion';
+GMAT CAPSTONE.AttitudeRateDisplayStateType = 'AngularVelocity';
+GMAT CAPSTONE.AttitudeCoordinateSystem = EarthMJ2000Eq;
+GMAT CAPSTONE.EulerAngleSequence = '321';
+
+%----------------------------------------
+%---------- ForceModels
+%----------------------------------------
+
+% ForceModels from lowest to highest fidelity
+
+Create ForceModel Earth3BP; %  Earth 3BP FM, treats the Earth as the primary point mass, includes point-mass perturbations from the Moon
+GMAT Earth3BP.CentralBody = Earth;
+GMAT Earth3BP.PrimaryBodies = {Earth};
+GMAT Earth3BP.PointMasses = {Luna};
+GMAT Earth3BP.Drag = None;
+GMAT Earth3BP.SRP = Off;
+GMAT Earth3BP.RelativisticCorrection = Off;
+GMAT Earth3BP.ErrorControl = None;
+GMAT Earth3BP.GravityField.Earth.Degree = 0;
+GMAT Earth3BP.GravityField.Earth.Order = 0;
+GMAT Earth3BP.GravityField.Earth.StmLimit = 100;
+GMAT Earth3BP.GravityField.Earth.PotentialFile = 'JGM2.cof';
+GMAT Earth3BP.GravityField.Earth.TideModel = 'None';
+
+Create ForceModel Earth4BP; %  Earth 4BP FM, treats the Earth as the primary point mass, includes point-mass perturbations from the Moon and Sun
+GMAT Earth4BP.CentralBody = Earth;
+GMAT Earth4BP.PrimaryBodies = {Earth};
+GMAT Earth4BP.PointMasses = {Sun, Luna};
+GMAT Earth4BP.Drag = None;
+GMAT Earth4BP.SRP = Off;
+GMAT Earth4BP.RelativisticCorrection = Off;
+GMAT Earth4BP.ErrorControl = None;
+GMAT Earth4BP.GravityField.Earth.Degree = 0;
+GMAT Earth4BP.GravityField.Earth.Order = 0;
+GMAT Earth4BP.GravityField.Earth.StmLimit = 100;
+GMAT Earth4BP.GravityField.Earth.PotentialFile = 'JGM2.cof';
+GMAT Earth4BP.GravityField.Earth.TideModel = 'None';
+
+Create ForceModel EarthJ2; % EarthJ2 FM that uses full gravitational fields for Earth, includes point-mass perturbations from the Sun, Earth, Venus, Mars, Jupiter, Saturn, Uranus, and Neptune.
+GMAT EarthJ2.CentralBody = Earth;
+GMAT EarthJ2.PrimaryBodies = {Earth};
+GMAT EarthJ2.PointMasses = {Sun, Luna, Mercury, Venus, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto};
+GMAT EarthJ2.Drag = None;
+GMAT EarthJ2.SRP = Off;
+GMAT EarthJ2.RelativisticCorrection = On;
+GMAT EarthJ2.ErrorControl = RSSStep;
+GMAT EarthJ2.GravityField.Earth.Degree = 50;
+GMAT EarthJ2.GravityField.Earth.Order = 50;
+GMAT EarthJ2.GravityField.Earth.StmLimit = 100;
+GMAT EarthJ2.GravityField.Earth.PotentialFile = 'JGM2.cof';
+GMAT EarthJ2.GravityField.Earth.TideModel = 'None';
+
+Create ForceModel MoonJ2; % MoonJ2 FM that uses full gravitational fields for Moon, includes point-mass perturbations from the Sun, Earth, Venus, Mars, Jupiter, Saturn, Uranus, and Neptune
+GMAT MoonJ2.CentralBody = Luna;
+GMAT MoonJ2.PrimaryBodies = {Luna};
+GMAT MoonJ2.PointMasses = {Sun, Earth, Mercury, Venus, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto};
+GMAT MoonJ2.Drag = None;
+GMAT MoonJ2.SRP = Off;
+GMAT MoonJ2.RelativisticCorrection = On;
+GMAT MoonJ2.ErrorControl = RSSStep;
+GMAT MoonJ2.GravityField.Luna.Degree = 50;
+GMAT MoonJ2.GravityField.Luna.Order = 50;
+GMAT MoonJ2.GravityField.Luna.StmLimit = 100;
+GMAT MoonJ2.GravityField.Luna.PotentialFile = 'LP165P.cof';
+GMAT MoonJ2.GravityField.Luna.TideModel = 'None';
+
+Create ForceModel EarthMoonJ2; %  EarthMoonJ2 FM, uses multiple full gravitational fields for Earth and Moon, includes point-mass perturbations from the Sun, Venus, Mars, Jupiter, Saturn, Uranus, and Neptune
+GMAT EarthMoonJ2.CentralBody = Earth;
+GMAT EarthMoonJ2.PrimaryBodies = {Luna};
+GMAT EarthMoonJ2.PointMasses = {Sun, Venus, Mars, Jupiter, Saturn, Uranus, Neptune};
+GMAT EarthMoonJ2.Drag = None;
+GMAT EarthMoonJ2.SRP = Off;
+GMAT EarthMoonJ2.RelativisticCorrection = On;
+GMAT EarthMoonJ2.ErrorControl = RSSStep;
+GMAT EarthMoonJ2.GravityField.Luna.Degree = 16;
+GMAT EarthMoonJ2.GravityField.Luna.Order = 16;
+GMAT EarthMoonJ2.GravityField.Luna.StmLimit = 100;
+GMAT EarthMoonJ2.GravityField.Luna.PotentialFile = '../data/gravity/luna/grgm900c.cof';
+GMAT EarthMoonJ2.GravityField.Luna.TideFile = '../data/gravity/luna/grgm900c.tide';
+GMAT EarthMoonJ2.GravityField.Luna.TideModel = 'Solid';
+%GMAT EarthMoonJ2.GravityField.Earth.Degree = 12;
+%GMAT EarthMoonJ2.GravityField.Earth.Order = 12;
+%GMAT EarthMoonJ2.GravityField.Earth.StmLimit = 100;
+%GMAT EarthMoonJ2.GravityField.Earth.PotentialFile = 'JGM2.cof';
+%GMAT EarthMoonJ2.GravityField.Earth.TideModel = 'None';
+
+Create ForceModel EarthMoonJ2_SRP;  %  EarthMoonJ2 FM, uses multiple full gravitational fields for Earth and Moon, includes point-mass perturbations from the Sun, Venus, Mars, Jupiter, Saturn, Uranus, and Neptune, includes SRP
+GMAT EarthMoonJ2_SRP.CentralBody = Earth;
+GMAT EarthMoonJ2_SRP.PrimaryBodies = {Luna};
+GMAT EarthMoonJ2_SRP.PointMasses = {Sun, Venus, Mars, Jupiter, Saturn, Uranus, Neptune};
+GMAT EarthMoonJ2_SRP.Drag = None;
+GMAT EarthMoonJ2_SRP.SRP = On;
+GMAT EarthMoonJ2_SRP.RelativisticCorrection = On;
+GMAT EarthMoonJ2_SRP.ErrorControl = RSSStep;
+GMAT EarthMoonJ2_SRP.GravityField.Luna.Degree = 16;
+GMAT EarthMoonJ2_SRP.GravityField.Luna.Order = 16;
+GMAT EarthMoonJ2_SRP.GravityField.Luna.StmLimit = 100;
+GMAT EarthMoonJ2_SRP.GravityField.Luna.PotentialFile = '../data/gravity/luna/grgm900c.cof';
+GMAT EarthMoonJ2_SRP.GravityField.Luna.TideFile = '../data/gravity/luna/grgm900c.tide';
+GMAT EarthMoonJ2_SRP.GravityField.Luna.TideModel = 'Solid';
+%GMAT EarthMoonJ2_SRP.GravityField.Earth.Degree = 12;
+%GMAT EarthMoonJ2_SRP.GravityField.Earth.Order = 12;
+%GMAT EarthMoonJ2_SRP.GravityField.Earth.StmLimit = 100;
+%GMAT EarthMoonJ2_SRP.GravityField.Earth.PotentialFile = 'JGM2.cof';
+%GMAT EarthMoonJ2_SRP.GravityField.Earth.TideModel = 'None';
+GMAT EarthMoonJ2_SRP.SRP.Flux = 1367;
+GMAT EarthMoonJ2_SRP.SRP.SRPModel = Spherical;
+GMAT EarthMoonJ2_SRP.SRP.Nominal_Sun = 149597870.691;
+
+%----------------------------------------
+%---------- Propagators
+%----------------------------------------
+
+% Propagators from lowest to highest fidelity
+
+Create Propagator Earth3BPProp;
+GMAT Earth3BPProp.FM = Earth3BP;
+GMAT Earth3BPProp.Type = RungeKutta89;
+GMAT Earth3BPProp.InitialStepSize = 60;
+GMAT Earth3BPProp.Accuracy = 1E-14;
+GMAT Earth3BPProp.MinStep = 60;
+GMAT Earth3BPProp.MaxStep = 60;
+GMAT Earth3BPProp.StopIfAccuracyIsViolated = false;
+
+Create Propagator Earth4BPProp;
+GMAT Earth4BPProp.FM = Earth4BP;
+GMAT Earth4BPProp.Type = RungeKutta89;
+GMAT Earth4BPProp.InitialStepSize = 60;
+GMAT Earth4BPProp.Accuracy = 1E-14;
+GMAT Earth4BPProp.MinStep = 60;
+GMAT Earth4BPProp.MaxStep = 60;
+GMAT Earth4BPProp.StopIfAccuracyIsViolated = false;
+
+Create Propagator EarthJ2Prop;
+GMAT EarthJ2Prop.FM = EarthJ2;
+GMAT EarthJ2Prop.Type = RungeKutta89;
+GMAT EarthJ2Prop.InitialStepSize = 60;
+GMAT EarthJ2Prop.Accuracy = 1e-14;
+GMAT EarthJ2Prop.MinStep = 60;
+GMAT EarthJ2Prop.MaxStep = 60;
+GMAT EarthJ2Prop.MaxStepAttempts = 50;
+GMAT EarthJ2Prop.StopIfAccuracyIsViolated = false;
+
+Create Propagator MoonJ2Prop;
+GMAT MoonJ2Prop.FM = MoonJ2;
+GMAT MoonJ2Prop.Type = RungeKutta89;
+GMAT MoonJ2Prop.InitialStepSize = 60;
+GMAT MoonJ2Prop.Accuracy = 1e-14;
+GMAT MoonJ2Prop.MinStep = 60;
+GMAT MoonJ2Prop.MaxStep = 60;
+GMAT MoonJ2Prop.MaxStepAttempts = 50;
+GMAT MoonJ2Prop.StopIfAccuracyIsViolated = false;
+
+Create Propagator EarthMoonJ2Prop;
+GMAT EarthMoonJ2Prop.FM = EarthMoonJ2;
+GMAT EarthMoonJ2Prop.Type = RungeKutta89;
+GMAT EarthMoonJ2Prop.InitialStepSize = 60;
+GMAT EarthMoonJ2Prop.Accuracy = 1e-14;
+GMAT EarthMoonJ2Prop.MinStep = 60;
+GMAT EarthMoonJ2Prop.MaxStep = 60;
+GMAT EarthMoonJ2Prop.MaxStepAttempts = 50;
+GMAT EarthMoonJ2Prop.StopIfAccuracyIsViolated = false;
+
+Create Propagator EarthMoonJ2_SRPProp;
+GMAT EarthMoonJ2_SRPProp.FM = EarthMoonJ2_SRP;
+GMAT EarthMoonJ2_SRPProp.Type = RungeKutta89;
+GMAT EarthMoonJ2_SRPProp.InitialStepSize = 60;
+GMAT EarthMoonJ2_SRPProp.Accuracy = 1e-14;
+GMAT EarthMoonJ2_SRPProp.MinStep = 60;
+GMAT EarthMoonJ2_SRPProp.MaxStep = 60;
+GMAT EarthMoonJ2_SRPProp.MaxStepAttempts = 50;
+GMAT EarthMoonJ2_SRPProp.StopIfAccuracyIsViolated = false;
+
+%----------------------------------------
+%---------- Coordinate Systems
+%----------------------------------------
+
+Create CoordinateSystem EarthSunRot;
+GMAT EarthSunRot.Origin = Earth;
+GMAT EarthSunRot.Axes = ObjectReferenced;
+GMAT EarthSunRot.XAxis = R;
+GMAT EarthSunRot.ZAxis = N;
+GMAT EarthSunRot.Primary = Sun;
+GMAT EarthSunRot.Secondary = Earth;
+
+Create CoordinateSystem MoonMJ2000Ec;
+GMAT MoonMJ2000Ec.Origin = Luna;
+GMAT MoonMJ2000Ec.Axes = MJ2000Ec;
+
+Create CoordinateSystem EarthMoonRot;
+GMAT EarthMoonRot.Origin = EarthMoonBary;
+GMAT EarthMoonRot.Axes = ObjectReferenced;
+GMAT EarthMoonRot.XAxis = R;
+GMAT EarthMoonRot.ZAxis = N;
+GMAT EarthMoonRot.Primary = Earth;
+GMAT EarthMoonRot.Secondary = Luna;
+
+%----------------------------------------
+%---------- Subscribers
+%----------------------------------------
+
+% Create XYPlot PosTrajPlot;
+% GMAT PosTrajPlot.SolverIterations = None;
+% GMAT PosTrajPlot.UpperLeft = [ 0.2076719576719577 0.08859470468431772 ];
+% GMAT PosTrajPlot.Size = [ 0.3968253968253968 0.3961303462321792 ];
+% GMAT PosTrajPlot.RelativeZOrder = 696;
+% GMAT PosTrajPlot.Maximized = false;
+% GMAT PosTrajPlot.XVariable = CAPSTONE.UTCModJulian;
+% GMAT PosTrajPlot.YVariables = {CAPSTONE.EarthMJ2000Ec.X, CAPSTONE.EarthMJ2000Ec.Y, CAPSTONE.EarthMJ2000Ec.Z};
+% GMAT PosTrajPlot.ShowGrid = true;
+% GMAT PosTrajPlot.ShowPlot = true;
+
+% Create XYPlot VelTrajPlot;
+% GMAT VelTrajPlot.SolverIterations = None;
+% GMAT VelTrajPlot.UpperLeft = [ 0.2076719576719577 0.4867617107942974 ];
+% GMAT VelTrajPlot.Size = [ 0.3968253968253968 0.3961303462321792 ];
+% GMAT VelTrajPlot.RelativeZOrder = 701;
+% GMAT VelTrajPlot.Maximized = false;
+% GMAT VelTrajPlot.XVariable = CAPSTONE.UTCModJulian;
+% GMAT VelTrajPlot.YVariables = {CAPSTONE.EarthMJ2000Ec.VX, CAPSTONE.EarthMJ2000Ec.VY, CAPSTONE.EarthMJ2000Ec.VZ};
+% GMAT VelTrajPlot.ShowGrid = true;
+% GMAT VelTrajPlot.ShowPlot = true;
+
+% Create OrbitView EarthInertialView;
+% GMAT EarthInertialView.SolverIterations = Current;
+% GMAT EarthInertialView.UpperLeft = [ 0.6078042328042328 0.08859470468431772 ];
+% GMAT EarthInertialView.Size = [ 0.3968253968253968 0.3961303462321792 ];
+% GMAT EarthInertialView.RelativeZOrder = 714;
+% GMAT EarthInertialView.Maximized = false;
+% GMAT EarthInertialView.Add = {CAPSTONE, Earth, Luna, Sun};
+% GMAT EarthInertialView.CoordinateSystem = EarthMJ2000Ec;
+% GMAT EarthInertialView.DrawObject = [ true true true ];
+% GMAT EarthInertialView.DataCollectFrequency = 1;
+% GMAT EarthInertialView.UpdatePlotFrequency = 50;
+% GMAT EarthInertialView.NumPointsToRedraw = 0;
+% GMAT EarthInertialView.ShowPlot = true;
+% GMAT EarthInertialView.MaxPlotPoints = 200000;
+% GMAT EarthInertialView.ShowLabels = true;
+% GMAT EarthInertialView.ViewPointReference = Earth;
+% GMAT EarthInertialView.ViewPointVector = [ 30000 -20000 10000 ];
+% GMAT EarthInertialView.ViewDirection = Earth;
+% GMAT EarthInertialView.ViewScaleFactor = 30;
+% GMAT EarthInertialView.ViewUpCoordinateSystem = EarthMJ2000Ec;
+% GMAT EarthInertialView.ViewUpAxis = Z;
+% GMAT EarthInertialView.EclipticPlane = Off;
+% GMAT EarthInertialView.XYPlane = On;
+% GMAT EarthInertialView.WireFrame = Off;
+% GMAT EarthInertialView.Axes = On;
+% GMAT EarthInertialView.Grid = Off;
+% GMAT EarthInertialView.SunLine = Off;
+% GMAT EarthInertialView.UseInitialView = On;
+% GMAT EarthInertialView.StarCount = 7000;
+% GMAT EarthInertialView.EnableStars = On;
+% GMAT EarthInertialView.EnableConstellations = On;
+
+Create OrbitView EarthMoonRotView;
+GMAT EarthMoonRotView.SolverIterations = Current;
+GMAT EarthMoonRotView.UpperLeft = [ 0.6078042328042328 0.4867617107942974 ];
+GMAT EarthMoonRotView.Size = [ 0.3968253968253968 0.3961303462321792 ];
+GMAT EarthMoonRotView.RelativeZOrder = 706;
+GMAT EarthMoonRotView.Maximized = false;
+GMAT EarthMoonRotView.Add = {CAPSTONE, Earth, Luna, Sun};
+GMAT EarthMoonRotView.CoordinateSystem = EarthMoonRot;
+GMAT EarthMoonRotView.DrawObject = [ true true true ];
+GMAT EarthMoonRotView.DataCollectFrequency = 1;
+GMAT EarthMoonRotView.UpdatePlotFrequency = 50;
+GMAT EarthMoonRotView.NumPointsToRedraw = 0;
+GMAT EarthMoonRotView.ShowPlot = true;
+GMAT EarthMoonRotView.MaxPlotPoints = 200000;
+GMAT EarthMoonRotView.ShowLabels = true;
+GMAT EarthMoonRotView.ViewPointReference = EarthMoonBary;
+GMAT EarthMoonRotView.ViewPointVector = [ 800000 -10000 20000 ];
+GMAT EarthMoonRotView.ViewDirection = EarthMoonBary;
+GMAT EarthMoonRotView.ViewScaleFactor = 1;
+GMAT EarthMoonRotView.ViewUpCoordinateSystem = EarthMoonRot;
+GMAT EarthMoonRotView.ViewUpAxis = Z;
+GMAT EarthMoonRotView.EclipticPlane = Off;
+GMAT EarthMoonRotView.XYPlane = On;
+GMAT EarthMoonRotView.WireFrame = Off;
+GMAT EarthMoonRotView.Axes = On;
+GMAT EarthMoonRotView.Grid = Off;
+GMAT EarthMoonRotView.SunLine = Off;
+GMAT EarthMoonRotView.UseInitialView = On;
+GMAT EarthMoonRotView.StarCount = 7000;
+GMAT EarthMoonRotView.EnableStars = On;
+GMAT EarthMoonRotView.EnableConstellations = On;
+
+Create ReportFile CAPSTONE_Ephem;
+GMAT CAPSTONE_Ephem.SolverIterations = None;
+GMAT CAPSTONE_Ephem.UpperLeft        = [ 0 0 ];
+GMAT CAPSTONE_Ephem.Size             = [ 0 0 ];
+GMAT CAPSTONE_Ephem.RelativeZOrder   = 0;
+GMAT CAPSTONE_Ephem.Maximized        = false;
+%GMAT CAPSTONE_Ephem.Filename         = '/Users/bhanson/Library/CloudStorage/OneDrive-UCSanDiego/UCSD/Research/Rosengren/SFFP/CAPSTONE/Data/GMAT Prop/Nov 19/CAPSTONE_Earth3BP_ephem.txt';
+%GMAT CAPSTONE_Ephem.Filename         = '/Users/bhanson/Library/CloudStorage/OneDrive-UCSanDiego/UCSD/Research/Rosengren/SFFP/CAPSTONE/Data/GMAT Prop/Nov 19/CAPSTONE_Earth4BP_ephem.txt';
+%GMAT CAPSTONE_Ephem.Filename         = '/Users/bhanson/Library/CloudStorage/OneDrive-UCSanDiego/UCSD/Research/Rosengren/SFFP/CAPSTONE/Data/GMAT Prop/Nov 19/CAPSTONE_EarthJ2_ephem.txt';
+%GMAT CAPSTONE_Ephem.Filename         = '/Users/bhanson/Library/CloudStorage/OneDrive-UCSanDiego/UCSD/Research/Rosengren/SFFP/CAPSTONE/Data/GMAT Prop/Nov 19/CAPSTONE_EarthMoonJ2_ephem.txt';
+%GMAT CAPSTONE_Ephem.Filename         = '/Users/bhanson/Library/CloudStorage/OneDrive-UCSanDiego/UCSD/Research/Rosengren/SFFP/CAPSTONE/Data/GMAT Prop/Nov 19/CAPSTONE_EarthMoonJ2_SRP_ephem.txt';
+GMAT CAPSTONE_Ephem.Filename         = 'C:/Users/ethan/OneDrive/Documents/GMAT/Instruction Manuals/GMAT/GMAT_examples/Data/CAPSTONE_EarthMoonSwitch_ephem.txt';
+GMAT CAPSTONE_Ephem.Precision        = 16;
+GMAT CAPSTONE_Ephem.Add              = {CAPSTONE.Epoch.TDBGregorian, CAPSTONE.EarthMJ2000Ec.X, CAPSTONE.EarthMJ2000Ec.Y, CAPSTONE.EarthMJ2000Ec.Z, CAPSTONE.EarthMJ2000Ec.VX, CAPSTONE.EarthMJ2000Ec.VY, CAPSTONE.EarthMJ2000Ec.VZ};
+GMAT CAPSTONE_Ephem.WriteHeaders     = true;
+GMAT CAPSTONE_Ephem.LeftJustify      = On;
+GMAT CAPSTONE_Ephem.ZeroFill         = Off;
+GMAT CAPSTONE_Ephem.FixedWidth       = true;
+GMAT CAPSTONE_Ephem.Delimiter        = ' ';
+GMAT CAPSTONE_Ephem.ColumnWidth      = 23;
+GMAT CAPSTONE_Ephem.WriteReport      = true;
+
+%----------------------------------------
+%---------- Arrays, Variables, Strings
+%----------------------------------------
+Create Variable SwitchInterval MaxMissionDuration CurrentTime LHSRadius MoonDistance InLHS;
+Create String status;
+
+
+%----------------------------------------
+%---------- Mission Sequence
+%----------------------------------------
+
+
+BeginMissionSequence;
+
+%Propagate Earth3BPProp(CAPSTONE) {CAPSTONE.ElapsedDays = 33};    %3BP propagation
+
+%Propagate Earth4BPProp(CAPSTONE) {CAPSTONE.ElapsedDays = 33};    %4BP propagation
+
+%Propagate EarthJ2Prop(CAPSTONE) {CAPSTONE.ElapsedDays = 33};        %EarthJ2 propagation
+
+%Propagate EarthMoonJ2Prop(CAPSTONE) {CAPSTONE.ElapsedDays = 33};  %Multi-field propagation
+
+%Propagate EarthMoonJ2_SRPProp(CAPSTONE) {CAPSTONE.ElapsedDays = 33};  %Multi-field propagation + SRP
+
+%Toggling back-and-forth propagation 
+
+ SwitchInterval     = 1/24;  % Interval at which to check and switch propagators (days)
+ MaxMissionDuration = 33.0; % Total mission duration (days)
+ CurrentTime        = 0.0;
+ LHSRadius          =  6.161496834338317e+04;
+ MoonDistance       = ((CAPSTONE.EarthMJ2000Ec.X - Luna.EarthMJ2000Ec.X)^2+(CAPSTONE.EarthMJ2000Ec.Y - Luna.EarthMJ2000Ec.Y)^2+(CAPSTONE.EarthMJ2000Ec.Z - Luna.EarthMJ2000Ec.Z)^2)^(0.5);
+
+ If MoonDistance < LHSRadius;  % Example distance threshold to switch propagators
+ 	InLHS  = 1;
+ 	status = 'Began in LHS at: ';
+ 	Write status; 
+ 	Write CAPSTONE.UTCGregorian;
+ Else;
+ 	InLHS  = 0; 
+ 	status = 'Began out of LHS at: ';
+ 	Write status; 
+ 	Write CAPSTONE.UTCGregorian;
+ EndIf;
+
+ While CurrentTime < MaxMissionDuration;
+
+ 	MoonDistance = ((CAPSTONE.EarthMJ2000Ec.X - Luna.EarthMJ2000Ec.X)^2+(CAPSTONE.EarthMJ2000Ec.Y - Luna.EarthMJ2000Ec.Y)^2+(CAPSTONE.EarthMJ2000Ec.Z - Luna.EarthMJ2000Ec.Z)^2)^(0.5);
+
+ 	If MoonDistance < LHSRadius;  % Example distance threshold to switch propagators
+ 		Propagate MoonJ2Prop(CAPSTONE) {CAPSTONE.ElapsedDays = SwitchInterval};
+ 		If InLHS == 0;
+ 			InLHS = 1;
+ 			status = 'Entered LHS at:';
+ 			Write status; 
+ 			Write CAPSTONE.UTCGregorian; 
+ 		EndIf; 
+ 	Else;
+ 		Propagate EarthJ2Prop(CAPSTONE) {CAPSTONE.ElapsedDays = SwitchInterval};
+ 		If InLHS == 1;
+ 			InLHS = 0;
+ 			status = 'Exited LHS at:';
+ 			Write status; 
+ 			Write CAPSTONE.UTCGregorian; 
+ 		EndIf; 
+ 	EndIf;
+
+ 	CurrentTime = CurrentTime + SwitchInterval;
+ EndWhile;

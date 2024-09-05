@@ -1,0 +1,13 @@
+
+%----------------------------------------
+%---------- Solar System User-Modified Values
+%----------------------------------------
+
+GMAT SolarSystem.EphemerisSource = 'SPICE';
+GMAT SolarSystem.SPKFilename = 'C:\Users\ethan\OneDrive\Documents\GMAT\Instruction Manuals\GMAT\GMAT_examples\Kernels\de440.bsp';
+GMAT Mars.NAIFId    = 4;
+GMAT Jupiter.NAIFId = 5;
+GMAT Saturn.NAIFId  = 6;
+GMAT Uranus.NAIFId  = 7;
+GMAT Neptune.NAIFId = 8;
+GMAT Pluto.NAIFId   = 9;

@@ -1,0 +1,24 @@
+
+%----------------------------------------
+%---------- ForceModels
+%----------------------------------------
+
+Create ForceModel EarthMoonJ2; %  EarthMoonJ2 FM, uses multiple full gravitational fields for Earth and Moon, includes point-mass perturbations from the Sun, Venus, Mars, Jupiter, Saturn, Uranus, and Neptune
+GMAT EarthMoonJ2.CentralBody = Earth;
+GMAT EarthMoonJ2.PrimaryBodies = {Luna};
+GMAT EarthMoonJ2.PointMasses = {Sun, Venus, Mars, Jupiter, Saturn, Uranus, Neptune};
+GMAT EarthMoonJ2.Drag = None;
+GMAT EarthMoonJ2.SRP = Off;
+GMAT EarthMoonJ2.RelativisticCorrection = On;
+GMAT EarthMoonJ2.ErrorControl = RSSStep;
+GMAT EarthMoonJ2.GravityField.Luna.Degree = 16;
+GMAT EarthMoonJ2.GravityField.Luna.Order = 16;
+GMAT EarthMoonJ2.GravityField.Luna.StmLimit = 100;
+GMAT EarthMoonJ2.GravityField.Luna.PotentialFile = '../data/gravity/luna/grgm900c.cof';
+GMAT EarthMoonJ2.GravityField.Luna.TideFile = '../data/gravity/luna/grgm900c.tide';
+GMAT EarthMoonJ2.GravityField.Luna.TideModel = 'Solid';
+%GMAT EarthMoonJ2.GravityField.Earth.Degree = 12;
+%GMAT EarthMoonJ2.GravityField.Earth.Order = 12;
+%GMAT EarthMoonJ2.GravityField.Earth.StmLimit = 100;
+%GMAT EarthMoonJ2.GravityField.Earth.PotentialFile = 'JGM2.cof';
+%GMAT EarthMoonJ2.GravityField.Earth.TideModel = 'None';

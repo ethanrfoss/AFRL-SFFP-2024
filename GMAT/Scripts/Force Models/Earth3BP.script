@@ -1,0 +1,18 @@
+
+%----------------------------------------
+%---------- ForceModels
+%----------------------------------------
+
+Create ForceModel Earth3BP; %  Earth 3BP FM, treats the Earth as the primary point mass, includes point-mass perturbations from the Moon
+GMAT Earth3BP.CentralBody = Earth;
+GMAT Earth3BP.PrimaryBodies = {Earth};
+GMAT Earth3BP.PointMasses = {Luna};
+GMAT Earth3BP.Drag = None;
+GMAT Earth3BP.SRP = Off;
+GMAT Earth3BP.RelativisticCorrection = Off;
+GMAT Earth3BP.ErrorControl = None;
+GMAT Earth3BP.GravityField.Earth.Degree = 0;
+GMAT Earth3BP.GravityField.Earth.Order = 0;
+GMAT Earth3BP.GravityField.Earth.StmLimit = 100;
+GMAT Earth3BP.GravityField.Earth.PotentialFile = 'JGM2.cof';
+GMAT Earth3BP.GravityField.Earth.TideModel = 'None';

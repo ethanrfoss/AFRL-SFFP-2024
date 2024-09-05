@@ -1,0 +1,17 @@
+%----------------------------------------
+%---------- ForceModels
+%----------------------------------------
+
+Create ForceModel Earth4BP; %  Earth 4BP FM, treats the Earth as the primary point mass, includes point-mass perturbations from the Moon and Sun
+GMAT Earth4BP.CentralBody = Earth;
+GMAT Earth4BP.PrimaryBodies = {Earth};
+GMAT Earth4BP.PointMasses = {Sun, Luna};
+GMAT Earth4BP.Drag = None;
+GMAT Earth4BP.SRP = Off;
+GMAT Earth4BP.RelativisticCorrection = Off;
+GMAT Earth4BP.ErrorControl = None;
+GMAT Earth4BP.GravityField.Earth.Degree = 0;
+GMAT Earth4BP.GravityField.Earth.Order = 0;
+GMAT Earth4BP.GravityField.Earth.StmLimit = 100;
+GMAT Earth4BP.GravityField.Earth.PotentialFile = 'JGM2.cof';
+GMAT Earth4BP.GravityField.Earth.TideModel = 'None';
